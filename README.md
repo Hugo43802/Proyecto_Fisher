@@ -12,3 +12,7 @@
 En este repositorio encontrarán las carpetas de trabajo con los diferentes elementos que se pueden conectar con el PLC "TXT-CONTROLLER", dicha carpeta tiene el nombre de PROGRAMAS. Adicionalmente, se tendrá una carpeta interna que presenta los programas desarrollados por interfaz gráfica presentada con la librería PyQt5 y el editor Visual Studio Code.
 
 Además, en el repositorio se adicionan los manuales traducidos por un programa online para un mejor entendimiento de ciertos conceptos técnicos.
+
+## Versión de Python 
+
+La versión de python utilizada es 3.9.7
