@@ -1,0 +1,12 @@
+[app]
+name: btn_Luz
+category: Btn-Luz
+author: Hugo Vega
+icon: icon.png
+desc: TXT app tutorial #1
+url: http://cfw.ftcommunity.de/ftcommunity-TXT/en/programming/python/tutorial-1.html
+exec: boton.py
+managed: yes
+uuid: 191fe5a6-313b-4083-af65-d1ad7fd6d281
+version: 1.0
+firmware: 0.9
