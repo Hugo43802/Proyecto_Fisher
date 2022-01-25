@@ -21,18 +21,19 @@ def run():
     print("El estado actual del sensor es: ", estado)
     
     while True:
+        motor.stop()
+        print("El estado es = ", estado)
         nuevo_estado = reed.state()
         
         if nuevo_estado != 0:
-            sleep(2)
-            motor.setSpeed(150)
-            
+            #sleep(2)
+            motor.setSpeed(512)
             print("Estado nuevo: ", nuevo_estado)
             estado = nuevo_estado
             
+        #motor.stop()    
         plc.updateWait()
         
               
-
 if __name__ == "__main__":
     run()
