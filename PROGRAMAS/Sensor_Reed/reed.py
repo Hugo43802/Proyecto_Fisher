@@ -6,7 +6,9 @@ import ftrobopy
 
 
 # función para conectar el plc
-plc = ftrobopy.ftrobopy("192.168.1.208")
+# plc = ftrobopy.ftrobopy("192.168.1.208")
+
+plc = ftrobopy.ftrobopy("192.168.0.101")
 
 def run():
     #se crea el objeto sensor reed y se verifica el estado

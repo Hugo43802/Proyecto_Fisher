@@ -5,7 +5,9 @@
 import ftrobopy
 
 # Conectar el plc por medio de WLAN
-plc = ftrobopy.ftrobopy("192.168.1.208")
+#plc = ftrobopy.ftrobopy("192.168.1.208")
+#Universidad
+plc = ftrobopy.ftrobopy("192.168.0.101")
 
 
 def run():
