@@ -8,32 +8,46 @@ import ftrobopy
 # función para conectar el plc
 
 plc = ftrobopy.ftrobopy("192.168.0.101")
+cambio = 1
 
-def run():
+def banda1():
     # se crea el objeto sensor reed
-    reed = plc.input(2)
-    estado = reed.state()
+    b1 = plc.input(2)
+    b1_estado = b1.state()
+    
+    b2 = plc.input(3)
+    b2_estado = b2.state()
+    
     
     # creación de objeto motor
-    motor = plc.motor(2)
+    MA5 = plc.motor(2)
+    MA3 = plc.motor(1)
   
-    
-    print("El estado actual del sensor es: ", estado)
+    print("El estado del sensor B1 es: ", b1_estado)
+    print("El estado del sensor B2 es: ", b2_estado)
     
     while True:
-        motor.stop()
-        print("El estado es = ", estado)
-        nuevo_estado = reed.state()
+        cambio = 1
+        print("El estado de B1 es = ", b1_estado)
+        print("El estado de B2 es = ", b2_estado)
+        ns_b1 = b1.state()
+        ns_b2 = b2.state()
         
-        if nuevo_estado != 0:
-            #sleep(2)
-            motor.setSpeed(512)
-            print("Estado nuevo: ", nuevo_estado)
-            estado = nuevo_estado
-            
-        #motor.stop()    
-        plc.updateWait()
+        if cambio == 1 and ns_b1 != 0:
+            #plc.updateWait(0.5)
+            MA5.setSpeed(512)
+            MA3.setSpeed(512)
+            print(" B1 Estado nuevo: ", ns_b1)
+            b1_estado = ns_b1
         
+        if ns_b2 != 0:
+            cambio = 0
+            MA3.setSpeed(0)
+            MA5.setSpeed(0)
+            print(" B2 Estado nuevo: ", ns_b2)
+            b2_estado = ns_b2
+         
+            plc.updateWait()
               
 if __name__ == "__main__":
-    run()
+    banda1()
