@@ -4,8 +4,8 @@ import ftrobopy
 Controlar motor con encoder (rojo)
 
 '''
-
-plc = ftrobopy.ftrobopy("192.168.1.208")
+plc = ftrobopy.ftrobopy("192.168.0.101")
+#plc = ftrobopy.ftrobopy("192.168.1.208")
 # txt = ftrobopy.ftrobopy('192.168.7.2', 65000)
 
 def run():
