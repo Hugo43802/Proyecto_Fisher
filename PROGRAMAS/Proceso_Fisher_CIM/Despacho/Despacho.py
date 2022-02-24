@@ -2,7 +2,6 @@
     Este programa genera el movimiento del proceso de 
     Despacho
 '''
-from multiprocessing.connection import wait
 from time import sleep
 import ftrobopy
 
@@ -10,11 +9,15 @@ import ftrobopy
 
 plc = ftrobopy.ftrobopy("192.168.0.101")
 
+
+
 def motor_MA4():
+    
     MA4 = plc.output(5)
     MA4.setLevel(512)
     sleep(2)
     MA4.setLevel(0)
+    a = True
             
 def banda1():
     # se crea el objeto sensor reed
@@ -41,6 +44,7 @@ def banda1():
     
     while True:
         cambio = 1
+        a = False
         #print("El estado de B1 es = ", b1_estado)
         #print("El estado de B2 es = ", b2_estado)
         ns_b1 = b1.state()
@@ -57,7 +61,9 @@ def banda1():
             MA3.setLevel(0)
             MA5.setLevel(0)
             #print(" B2 Estado nuevo: ", ns_b2)
-            motor_MA4()         
+            
+            if a == False:
+                motor_MA4()         
             
             '''
                 Espera  segundo para encender nuevamente los motores
@@ -67,9 +73,10 @@ def banda1():
             
             MA3.setLevel(512)
             MA2.setLevel(512)
-            
                        
         if ns_b3 != 0:
+            a = False
+            cambio = 1
             MA3.setLevel(0)
             MA2.setLevel(0)
                              

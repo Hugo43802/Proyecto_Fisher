@@ -12,7 +12,7 @@ plc = ftrobopy.ftrobopy("192.168.0.101")
 
 def run():
     #se crea el objeto sensor reed y se verifica el estado
-    reed = plc.input(2)
+    reed = plc.input(4)
     estado = reed.state()
     print("El estado actual del botón es: ", estado)
 
