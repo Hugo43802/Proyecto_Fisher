@@ -1,5 +1,4 @@
 from time import sleep
-from Despacho import *
 import ftrobopy
 
 
@@ -27,10 +26,10 @@ def banda1():
     MA3 = plc.output(4)
     MA4 = plc.output(5)
     MA2 = plc.output(6)
-  
-    #print("El estado del sensor B1 es: ", b1_estado)
-    #print("El estado del sensor B2 es: ", b2_estado)
-    
+      
+    '''
+    El cambio de While funciona para que el while salga al ser falso y se ejecute una sola vez
+    '''
     cambio_while = True
     
     while cambio_while:
@@ -41,7 +40,7 @@ def banda1():
         
         if cambio == 1 and ns_b1 != 0:
             MA5.setLevel(512)
-            MA3.setLevel(512)
+            MA3.setLevel(500)
         
         if ns_b2 != 0 and permiso == 1:
             cambio = 0
@@ -57,7 +56,7 @@ def banda1():
             '''
             sleep(1)
             
-            MA3.setLevel(512)
+            MA3.setLevel(500)
             MA2.setLevel(512)
                        
         if ns_b3 != 0:
