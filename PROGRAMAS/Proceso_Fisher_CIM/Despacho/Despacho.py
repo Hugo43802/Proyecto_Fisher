@@ -10,7 +10,6 @@ import ftrobopy
 plc = ftrobopy.ftrobopy("192.168.0.101")
 
 
-
 def motor_MA4():
     
     MA4 = plc.output(5)
@@ -20,15 +19,14 @@ def motor_MA4():
     a = True
             
 def banda1():
+    # Permiso me sirve para verificar que la función motor_MA4 solo se ejecute una vez
+    permiso = 1
     # se crea el objeto sensor reed
     b1 = plc.input(2)
-    b1_estado = b1.state()
     
     b2 = plc.input(3)
-    b2_estado = b2.state()
     
     b3 = plc.input(4)
-    b3_estado = b3.state()
     
     ''' creación de objeto salida
         En este caso los motores se manejan como salidas 
@@ -44,9 +42,6 @@ def banda1():
     
     while True:
         cambio = 1
-        a = False
-        #print("El estado de B1 es = ", b1_estado)
-        #print("El estado de B2 es = ", b2_estado)
         ns_b1 = b1.state()
         ns_b2 = b2.state()
         ns_b3 = b3.state()
@@ -54,16 +49,14 @@ def banda1():
         if cambio == 1 and ns_b1 != 0:
             MA5.setLevel(512)
             MA3.setLevel(512)
-            #print(" B1 Estado nuevo: ", ns_b1)
         
-        if ns_b2 != 0:
+        if ns_b2 != 0 and permiso == 1:
             cambio = 0
             MA3.setLevel(0)
             MA5.setLevel(0)
             #print(" B2 Estado nuevo: ", ns_b2)
             
-            if a == False:
-                motor_MA4()         
+            motor_MA4()         
             
             '''
                 Espera  segundo para encender nuevamente los motores
@@ -79,7 +72,6 @@ def banda1():
             cambio = 1
             MA3.setLevel(0)
             MA2.setLevel(0)
-                             
          
         plc.updateWait()
               
