@@ -10,18 +10,26 @@ def motor_MA4():
     sleep(2)
     MA4.setLevel(0)
     
-def banda1():
-    # Permiso me sirve para verificar que la función motor_MA4 solo se ejecute una vez
-    permiso = 1
-    # se crea el objeto sensor reed
+def banda1(num_rampa):
+    # se crea el objeto sensor reed en input
     b1 = plc.input(2)
     b2 = plc.input(3)
     b3 = plc.input(4)
+    
+    #Botón de la banda lineal BG1
+    
+    BG1=plc.input(1)
     
     ''' creación de objeto salida
         En este caso los motores se manejan como salidas 
         en ese caso las salidas van de 0 a 512
     '''
+    # Objeto motor en output
+    ## BANDA LINEAL 
+    MA1 = plc.output(1)
+    MA1_2 = plc.output(2) # El 2 es la dirección opuesta
+    
+    ## DESPACHO
     MA5 = plc.output(3)
     MA3 = plc.output(4)
     MA4 = plc.output(5)
@@ -37,19 +45,18 @@ def banda1():
         ns_b1 = b1.state()
         ns_b2 = b2.state()
         ns_b3 = b3.state()
+        ns_BG1=BG1.state()
         
         if cambio == 1 and ns_b1 != 0:
             MA5.setLevel(512)
             MA3.setLevel(500)
         
-        if ns_b2 != 0 and permiso == 1:
+        if ns_b2 != 0 and ns_BG1==1:
             cambio = 0
             MA3.setLevel(0)
             MA5.setLevel(0)
-            #print(" B2 Estado nuevo: ", ns_b2)
             
             motor_MA4()         
-            
             '''
                 Espera  segundo para encender nuevamente los motores
                 MA3 y MA2
@@ -58,10 +65,37 @@ def banda1():
             
             MA3.setLevel(500)
             MA2.setLevel(512)
-                       
-        if ns_b3 != 0:
+       
+        if ns_b2 != 0 and ns_BG1==0:
             MA3.setLevel(0)
-            MA2.setLevel(0)
+            MA5.setLevel(0)
+            MA1.setLevel(512)
+            cambio =1
+            
+            
+            if cambio ==1:
+                MA1.setLevel(0)
+            
+            if ns_b3 != 0:
+                MA3.setLevel(0)
+                MA2.setLevel(0)
+                
+                if num_rampa == 1:
+                    if ns_BG1 != 0:
+                        MA1_2.setLevel(512)
+                        sleep(2)
+                        MA1_2.setLevel(0)
+                        MA2.setLevel(512)
+                        sleep(3)
+                        MA2.setLevel(0)
+                        MA1.setLevel(512)
+                        sleep(3)
+                        MA1.setLevel(0)
+                    else:
+                        MA1.setLevel(512)
+                        
+                        if ns_BG1 ==1:
+                            MA1.setLevel(0)
             
         cambio_while = False
         break
@@ -75,7 +109,7 @@ def run():
     MA2 = plc.output(6)
     
     while True:
-        #Variable para verificar el cambio
+        #Variable para enviar a la banda linea a donde debe moverse
         rampa = 0
         
         estado_B4 = B4.state()
@@ -86,17 +120,19 @@ def run():
         if estado_B4 != 1 and rampa == 0:
             rampa = 1
             print("El producto va a la rampa # 1")
-            banda1()
+            banda1(rampa)
         elif estado_B5 != 1:
-            rampa = 1
+            rampa = 2
             print("El producto va a la rampa # 2")
-            banda1()
+            banda1(rampa)
         elif estado_B6 != 1:
+            rampa = 3
             print("El producto va a la rampa # 3")
-            banda1()
+            banda1(rampa)
         elif estado_B7 != 1:
+            rampa = 42
             print("El producto va a la rampa # 4")
-            banda1()
+            banda1(rampa)
         else:
             print("Todas las rampas llenas")
         
