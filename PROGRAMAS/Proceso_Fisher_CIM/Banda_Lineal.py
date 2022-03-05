@@ -2,6 +2,7 @@ from time import sleep
 import ftrobopy
 
 
+# plc = ftrobopy.ftrobopy("192.168.0.101")
 plc = ftrobopy.ftrobopy("192.168.0.101")
 
 def motor_MA4():
@@ -32,7 +33,7 @@ def banda1(num_rampa):
     ## DESPACHO
     MA5 = plc.output(3)
     MA3 = plc.output(4)
-    MA4 = plc.output(5)
+    # MA4 = plc.output(5)
     MA2 = plc.output(6)
       
     '''
@@ -51,7 +52,7 @@ def banda1(num_rampa):
             MA5.setLevel(512)
             MA3.setLevel(500)
         
-        if ns_b2 != 0 and ns_BG1==1:
+        if ns_b2 != 0:
             cambio = 0
             MA3.setLevel(0)
             MA5.setLevel(0)
@@ -66,7 +67,7 @@ def banda1(num_rampa):
             MA3.setLevel(500)
             MA2.setLevel(512)
        
-        if ns_b2 != 0 and ns_BG1==0:
+        if ns_b2 != 0:
             MA3.setLevel(0)
             MA5.setLevel(0)
             MA1.setLevel(512)
@@ -106,7 +107,7 @@ def run():
     B6 = plc.input(7)
     B7 = plc.input(8)
     
-    MA2 = plc.output(6)
+    # MA2 = plc.output(6)
     
     while True:
         #Variable para enviar a la banda linea a donde debe moverse
@@ -130,7 +131,7 @@ def run():
             print("El producto va a la rampa # 3")
             banda1(rampa)
         elif estado_B7 != 1:
-            rampa = 42
+            rampa = 4
             print("El producto va a la rampa # 4")
             banda1(rampa)
         else:
