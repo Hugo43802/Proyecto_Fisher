@@ -18,7 +18,6 @@ def banda1(num_rampa):
     b3 = plc.input(4)
     
     #Botón de la banda lineal BG1
-    
     BG1=plc.input(1)
     
     ''' creación de objeto salida

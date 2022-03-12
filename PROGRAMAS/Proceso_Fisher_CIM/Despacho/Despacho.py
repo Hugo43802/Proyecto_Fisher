@@ -36,9 +36,6 @@ def banda1():
     MA4 = plc.output(5)
     MA2 = plc.output(6)
   
-    #print("El estado del sensor B1 es: ", b1_estado)
-    #print("El estado del sensor B2 es: ", b2_estado)
-    
     while True:
         cambio = 1
         ns_b1 = b1.state()
@@ -53,7 +50,6 @@ def banda1():
             cambio = 0
             MA3.setLevel(0)
             MA5.setLevel(0)
-            #print(" B2 Estado nuevo: ", ns_b2)
             
             motor_MA4()         
             
