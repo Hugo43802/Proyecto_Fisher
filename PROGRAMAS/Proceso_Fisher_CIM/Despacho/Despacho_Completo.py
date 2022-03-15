@@ -1,19 +1,21 @@
 from time import sleep
 import ftrobopy
 
-plc = ftrobopy.ftrobopy("192.168.1.208") # ip de mi hogar
+#plc = ftrobopy.ftrobopy("192.168.1.208") # ip de mi hogar
+plc = ftrobopy.ftrobopy("192.168.0.101") # ip de la U
 
 # Inicialización de variables y objetos
+
 
 ## SENSORES REED
 B1 = plc.input(2)
 B2 = plc.input(3)
 B3 = plc.input(4)
 
-B4 = plc.input(2) #cambiar a 5, 6, 7 y 8 para probar en original
-B5 = plc.input(3)
-B6 = plc.input(4)
-B7 = plc.input(5)
+B4 = plc.input(5) #cambiar a 5, 6, 7 y 8 para probar en original
+B5 = plc.input(6)
+B6 = plc.input(7)
+B7 = plc.input(8)
 
 ### MOTORES
 #Reset y banda lineal
@@ -21,8 +23,8 @@ MA1 = plc.output(1)
 MA1_Reverso = plc.output(2)
 #Despacho
 MA5 = plc.output(3)
-MA3 = plc.output(1) #Cambiar a 4 y 6 para probar original1
-MA2 = plc.output(3)
+MA3 = plc.output(4) #Cambiar a 4 y 6 para probar original1
+MA2 = plc.output(6)
 
 #### BOTÓN 
 BG1 = plc.input(1)
@@ -34,8 +36,8 @@ def reset():
         Función que permite enviar el eje lineal de nuevo a su posición original
     '''
     MA1.setLevel(512)
-    # Para probar en el sistema original, debe cambiarse a != 1
-    if BG1.state() != 1:
+    # Para probar en el sistema original, debe cambiarse a != 0
+    if BG1.state() != 0:
         MA1.setLevel(0)
         print("Eje en el origen")
 
@@ -43,7 +45,7 @@ def vinipelado():
     '''
         Función que activa el motor MA4 del prodceso de despacho
     '''
-    MA4 = plc.output(3) # Para probar en el sistema orginal cambiar a 5
+    MA4 = plc.output(5) # Para probar en el sistema orginal cambiar a 5
     MA4.setLevel(512)
     sleep(2)
     MA4.setLevel(0)
@@ -80,15 +82,17 @@ def eje_lineal(pulsos):
 
     meta = pos_inicial_eje + pulsos
 
+    cambio_while = True
+    
     while cambio_while:
         MA1.setLevel(0)
 
         if pulsos == 0:
             MA1_Reverso.setLevel(0)
-            MA3.setLevel(512)
+            MA2.setLevel(512)
 
-            if estado_B4 == 1:
-                MA3.setLevel(0)
+            if estado_B4 != 0:
+                MA2.setLevel(0)
 
         else:
             MA1_Reverso.setLevel(512)
@@ -99,23 +103,27 @@ def eje_lineal(pulsos):
         if plc.getCurrentCounterValue(0) >= meta:
             MA1_Reverso.setLevel(0)
             print("Eje en posición")
-            MA3.setLevel(512)
+            sleep(2)
+            
+            MA2.setLevel(512)
+            
+            if estado_B4 != 0:
+                MA2.setLevel(0)
             
             if estado_B5 == 1:
-                MA3.setLevel(0)
+                MA2.setLevel(0)
             
             if estado_B6 == 1:
-                MA3.setLevel(0)
+                MA2.setLevel(0)
 
             if estado_B7 == 1:
-                MA3.setLevel(0)
+                MA2.setLevel(0)
             
-            cambio_while = False
-        
+        cambio_while = False
         reset()
-        plc.updateWait()
+    plc.updateWait()
 
-def despacho(num_Rampa, pulsos = 0):
+def despacho(num_Rampa, pulsos):
     '''
         num_Rampa: Número de la rampa a la que el producto se dirigirá
 
