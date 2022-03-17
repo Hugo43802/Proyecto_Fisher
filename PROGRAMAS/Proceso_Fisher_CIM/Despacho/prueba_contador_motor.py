@@ -41,7 +41,7 @@ def run():
     Meta = Variable a la que se quiere llegar (objetivo), es la posición de la banda para llegar a las rampas
     (Revisar archivo Rampas.txt)
     '''
-    meta = C2 + 20
+    meta = C2 + 208
     
     '''
     Verificar siempre que es necesario apagar el último motor en uso

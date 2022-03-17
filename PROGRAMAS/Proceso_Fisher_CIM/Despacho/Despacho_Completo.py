@@ -95,35 +95,37 @@ def eje_lineal(pulsos):
             MA2.setLevel(512)
 
             if estado_B4 != 0:
+                print("Detectado B4")
                 MA2.setLevel(0)
 
         else:
+            C1 = plc.getCurrentCounterValue(0) 
+            print(C1)
+            
+            print("La meta es: ", meta)
+            print(pulsos)
+            
             MA1_Reverso.setLevel(512)
-        
-        C1 = plc.getCurrentCounterValue(0) 
-        print(C1)
+            if plc.getCurrentCounterValue(0) >= meta:
+                MA1_Reverso.setLevel(0)
+                print("Eje en posición")
+                sleep(2)
+                
+                MA2.setLevel(512)
+                sleep(2)
+                
+                if estado_B5 == 1:
+                    MA2.setLevel(0)
+                    print("Rampa 2 lista")
+                
+                if estado_B6 == 1:
+                    MA2.setLevel(0)
 
-        if plc.getCurrentCounterValue(0) >= meta:
-            MA1_Reverso.setLevel(0)
-            print("Eje en posición")
-            sleep(2)
+                if estado_B7 == 1:
+                    MA2.setLevel(0)
             
-            MA2.setLevel(512)
-            
-            if estado_B4 != 0:
-                MA2.setLevel(0)
-            
-            if estado_B5 == 1:
-                MA2.setLevel(0)
-            
-            if estado_B6 == 1:
-                MA2.setLevel(0)
-
-            if estado_B7 == 1:
-                MA2.setLevel(0)
-            
-        cambio_while = False
-        reset()
+                cambio_while =False
+    reset()
     plc.updateWait()
 
 def despacho(num_Rampa, pulsos):
@@ -195,7 +197,7 @@ def rampas():
         elif estado_B5 != 1:
             rampa = 2
             print("¡El producto se dirige a la rampa #2!")
-            despacho(rampa, 208)
+            despacho(rampa, 209)
         elif estado_B6 != 1:
             rampa = 3
             print("¡El producto se dirige a la rampa #3!")
