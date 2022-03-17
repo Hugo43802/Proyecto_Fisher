@@ -35,11 +35,14 @@ def reset():
     '''
         Función que permite enviar el eje lineal de nuevo a su posición original
     '''
-    MA1.setLevel(512)
+    
     # Para probar en el sistema original, debe cambiarse a != 0
-    if BG1.state() != 0:
+    while BG1.state() != 0:
         MA1.setLevel(0)
         print("Eje en el origen")
+        break
+    else:
+        MA1.setLevel(512)
 
 def vinipelado():
     '''
