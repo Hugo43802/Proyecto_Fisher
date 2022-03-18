@@ -1,10 +1,11 @@
 from time import sleep
 import ftrobopy
 
-plc = ftrobopy.ftrobopy("192.168.0.101")
+plc = ftrobopy.ftrobopy("192.168.1.240")
 
 MA1_2 = plc.output(2)
 MA1 = plc.output(1)
+MA2 = plc.output(7)
 BG1 = plc.input(1)
     
 def reset():
@@ -34,14 +35,14 @@ def run():
     get.CurrentCounterValue lee el contador existente en la conexión.
     C2 = Obtiene la posición inicial de la banda
     '''
-    C2 = plc.getCurrentCounterValue(0)
+    C2 = plc.getCurrentCounterValue(0)+200
     print("eL VALOR DE c2 es: ", C2)
     
     '''
     Meta = Variable a la que se quiere llegar (objetivo), es la posición de la banda para llegar a las rampas
     (Revisar archivo Rampas.txt)
     '''
-    meta = C2 + 20
+    meta = 0
     
     '''
     Verificar siempre que es necesario apagar el último motor en uso
@@ -55,10 +56,10 @@ def run():
         MA1_2.setLevel(512)
         C1 = plc.getCurrentCounterValue(0)
         print(C1)
-        
+        MA2.setLevel(512)
         if plc.getCurrentCounterValue(0) >= meta:
             MA1_2.setLevel(0)
-            print("Motor detenido")
+            print("Motor detenido en "+ str(plc.getCurrentCounterValue(0)))
             cambio_while = False
         
         plc.updateWait()
