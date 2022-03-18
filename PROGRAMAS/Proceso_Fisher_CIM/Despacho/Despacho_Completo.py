@@ -53,7 +53,7 @@ def vinipelado():
     sleep(2)
     MA4.setLevel(0)
 
-def eje_lineal(pulsos):
+def eje_lineal(num_Rampa, pulsos):
     '''
         pulsos = Cantidad de pasos que debe ejercer el motor para llegar a la meta
 
@@ -72,13 +72,10 @@ def eje_lineal(pulsos):
 
     # Los estados B4, B5, B6 y B7, verifican si el producto pasa por el sensor
 
-    estado_B4 = B4.state()
-    estado_B5 = B5.state()
-    estado_B6 = B6.state()
-    estado_B7 = B7.state()
+   
 
-    reset()
-    sleep(4)
+    #reset()
+    #sleep(4)
 
     pos_inicial_eje = plc.getCurrentCounterValue(0)
     print("El valor de C2 es: ", pos_inicial_eje)
@@ -87,45 +84,63 @@ def eje_lineal(pulsos):
 
     cambio_while = True
     
+    ns_B5 = B5.state()
+    
     while cambio_while:
+        estado_B4 = B4.state()
+        estado_B5 = B5.state()
+        estado_B6 = B6.state()
+        estado_B7 = B7.state()
+        
         MA1.setLevel(0)
 
         if pulsos == 0:
             MA1_Reverso.setLevel(0)
+            sleep(1)
             MA2.setLevel(512)
 
-            if estado_B4 != 0:
+            if estado_B4 == 1 and num_Rampa == 1:
                 print("Detectado B4")
                 MA2.setLevel(0)
+                break
 
         else:
             C1 = plc.getCurrentCounterValue(0) 
             print(C1)
             
             print("La meta es: ", meta)
-            print(pulsos)
+            print("Los pulsos contados son: ",pulsos)
             
             MA1_Reverso.setLevel(512)
-            if plc.getCurrentCounterValue(0) >= meta:
+            contador = 1
+            
+            while plc.getCurrentCounterValue(0) >= meta:
                 MA1_Reverso.setLevel(0)
                 print("Eje en posición")
                 sleep(2)
                 
                 MA2.setLevel(512)
                 sleep(2)
+                print("La rampa es: ", num_Rampa)
                 
-                if estado_B5 == 1:
+                if estado_B5 != 0: # El problema está en reconocer el valor del sensor.
                     MA2.setLevel(0)
-                    print("Rampa 2 lista")
-                
-                if estado_B6 == 1:
-                    MA2.setLevel(0)
+                    print("Rampa #2 lista")
+                    cambio_while =False
+                    break    
+                # elif estado_B6 == 1:
+                #     MA2.setLevel(0)
+                #     print("Rampa #3 Lista")
 
-                if estado_B7 == 1:
-                    MA2.setLevel(0)
+                # elif estado_B7 == 1:
+                #     MA2.setLevel(0)
+                #     print("Rampa #4 Lista")
             
-                cambio_while =False
+                
+    sleep(3)
     reset()
+    sleep(3)
+    rampas()
     plc.updateWait()
 
 def despacho(num_Rampa, pulsos):
@@ -167,13 +182,13 @@ def despacho(num_Rampa, pulsos):
             
             #Entrar al movimiento de la banda lineal
             if num_Rampa == 1:
-                eje_lineal(pulsos)
+                eje_lineal(num_Rampa,pulsos)
             elif num_Rampa == 2:
-                eje_lineal(pulsos)
+                eje_lineal(num_Rampa,pulsos)
             elif num_Rampa == 3:
-                eje_lineal(pulsos)
+                eje_lineal(num_Rampa, pulsos)
             elif num_Rampa == 4:
-                eje_lineal(pulsos)
+                eje_lineal(num_Rampa,pulsos)
 
 
     cambio_while = False
@@ -197,7 +212,7 @@ def rampas():
         elif estado_B5 != 1:
             rampa = 2
             print("¡El producto se dirige a la rampa #2!")
-            despacho(rampa, 209)
+            despacho(rampa, 207)
         elif estado_B6 != 1:
             rampa = 3
             print("¡El producto se dirige a la rampa #3!")
