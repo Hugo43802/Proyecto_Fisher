@@ -1,12 +1,14 @@
 from time import sleep
 import ftrobopy
 
-plc = ftrobopy.ftrobopy("192.168.1.240")
+plc = ftrobopy.ftrobopy("192.168.0.101")
 
 MA1_2 = plc.output(2)
 MA1 = plc.output(1)
-MA2 = plc.output(7)
+MA2 = plc.output(6)
 BG1 = plc.input(1)
+
+B4 = plc.input(5)
     
 def reset():
     '''
@@ -21,7 +23,6 @@ def reset():
     if BG1.state() != 0:
          MA1.setLevel(0)
     
-
     '''
     La variable cambio While a true para que inicie al secuencia. además se da inicio a la función reset.
     se espera un tiempo de 5 segundos.
@@ -29,13 +30,13 @@ def reset():
 def run():
     cambio_while = True
     reset()
-    sleep(5)
+    sleep(3)
     
     '''
     get.CurrentCounterValue lee el contador existente en la conexión.
     C2 = Obtiene la posición inicial de la banda
     '''
-    C2 = plc.getCurrentCounterValue(0)+200
+    C2 = plc.getCurrentCounterValue(0)
     print("eL VALOR DE c2 es: ", C2)
     
     '''
@@ -56,13 +57,25 @@ def run():
         MA1_2.setLevel(512)
         C1 = plc.getCurrentCounterValue(0)
         print(C1)
-        MA2.setLevel(512)
+        
         if plc.getCurrentCounterValue(0) >= meta:
             MA1_2.setLevel(0)
-            print("Motor detenido en "+ str(plc.getCurrentCounterValue(0)))
-            cambio_while = False
-        
-        plc.updateWait()
+            print("Motor detenido")
+            sleep(2)
+            reset()
+            
+            MA2.setLevel(512)
+            
+            if B4.state() == 1:
+                print("Es 1")
+                MA2.setLevel(0)
+                cambio_while = False
+                
+            
+            
+            
+    
+    plc.updateWait()
 
 if __name__ == "__main__":
     run()
