@@ -23,7 +23,7 @@ def motor(M,nivel, tiempo, cambio):
 def run():
 
     sensoresRampa=[]
-    for x in range(1,5):
+    for x in range(1,9):
             sensoresRampa.append(plc.input(x))
     
     estado_sensores=[]
@@ -32,16 +32,10 @@ def run():
         
     while True:
 
-        contador=0
 
-        for x in range(0,4):
+        for x in range(0,len(estado_sensores)):
             estado_sensores[x]=sensoresRampa[x].state()
 
-        for x in range(0,4):
-            if estado_sensores[x] != 0 and contador==0:
-                print(f"El producto va a la rampa {x+1} ")
-                banda1(x)
-                contador+=1
                 
         plc.updateWait()
 
