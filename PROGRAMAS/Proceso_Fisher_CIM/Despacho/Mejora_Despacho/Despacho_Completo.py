@@ -105,7 +105,7 @@ def eje_lineal(num_Rampa,sensor, pulsos):
         
         MA1_Reverso.setLevel(512)
         
-        while (plc.getCurrentCounterValue(0) >= meta) and (cambio_while == True):
+        while (plc.getCurrentCounterValue(0) >= meta) and (cambio_while == True): #Para no usar break, simplemente se mantiene el cambio a True
             estado = sensor.state() # el estado será el cambio del objeto dependiendo de la rampa
             MA1_Reverso.setLevel(0)
             print("Los pulsos contados son: ",pulsos)
