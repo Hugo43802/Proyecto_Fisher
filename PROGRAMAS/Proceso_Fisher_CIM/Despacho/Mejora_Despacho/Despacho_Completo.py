@@ -6,7 +6,6 @@ plc = ftrobopy.ftrobopy("192.168.1.240") # ip de mi hogar
 
 # Inicialización de variables y objetos
 
-
 ## SENSORES REED
 B1 = plc.input(2)
 B2 = plc.input(3)
@@ -132,6 +131,9 @@ def eje_lineal(num_Rampa,sensor, pulsos):
 def despacho(num_Rampa,sensor,pulsos):
     '''
         num_Rampa: Número de la rampa a la que el producto se dirigirá
+
+        sensor: Número del sensor recibido de la función rampas()
+
         pulsos: Es la cantidad de pasos que debe dar el motor para llegar a cada rampa
     '''
     reset()
@@ -195,7 +197,7 @@ def rampas():
         if estado_B4 != 1:
             rampa = 1
             print("¡El producto se dirige a la rampa #1!")
-            despacho(rampa,B4,  0)
+            despacho(rampa,B4,0)
         elif estado_B5 != 1:
             rampa = 2
             print("¡El producto se dirige a la rampa #2!")
