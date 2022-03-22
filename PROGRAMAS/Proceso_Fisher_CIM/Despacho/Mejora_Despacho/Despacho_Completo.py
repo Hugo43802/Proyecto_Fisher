@@ -157,7 +157,8 @@ def despacho(num_Rampa,sensor,pulsos):
             MA5.setLevel(0)
 
             vinipelado()
-            sleep(0.5)
+            
+            #sleep(0.5)
 
             MA3.setLevel(500)
             MA2.setLevel(512)

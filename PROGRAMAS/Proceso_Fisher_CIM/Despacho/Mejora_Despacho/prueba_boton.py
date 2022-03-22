@@ -11,18 +11,16 @@ def run():
 
     motor_banda_lineal = plc.output(6)
     estado_sensores=[]
+    
     for x in sensores:
         estado_sensores.append(x.state())
         
 
     while True:
         estado_boton = boton.state()
+        
         for x in range(0,4):
             estado_sensores[x]=sensores[x].state()
-        
-       
-        
-        
         
         while estado_boton != 1:
             

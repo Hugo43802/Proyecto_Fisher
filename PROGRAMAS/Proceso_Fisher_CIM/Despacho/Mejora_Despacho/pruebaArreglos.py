@@ -17,9 +17,6 @@ def motor(M,nivel, tiempo, cambio):
     sleep(tiempo)
     M.setLevel(cambio)
 
-
-
-
 def run():
 
     sensoresRampa=[]
@@ -31,14 +28,9 @@ def run():
         estado_sensores.append(x.state())
         
     while True:
-
-
         for x in range(0,len(estado_sensores)):
             estado_sensores[x]=sensoresRampa[x].state()
-
-                
         plc.updateWait()
-
 
 if __name__ == "__main__":
     run()
