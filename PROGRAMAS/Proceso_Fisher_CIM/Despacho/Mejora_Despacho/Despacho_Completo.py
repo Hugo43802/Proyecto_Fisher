@@ -201,11 +201,11 @@ def rampas():
         elif estado_B5 != 1:
             rampa = 2
             print("¡El producto se dirige a la rampa #2!")
-            despacho(rampa,B5,208)
+            despacho(rampa,B5,196)
         elif estado_B6 != 1:
             rampa = 3
             print("¡El producto se dirige a la rampa #3!")
-            despacho(rampa,B6 ,442)
+            despacho(rampa,B6 ,435)
         elif estado_B7 != 1:
             rampa = 4
             print("¡El producto se dirige a la rampa #4!")

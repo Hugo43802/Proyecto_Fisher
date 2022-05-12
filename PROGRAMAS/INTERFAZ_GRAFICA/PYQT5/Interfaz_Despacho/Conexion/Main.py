@@ -20,8 +20,8 @@ class DespachoUi(QtWidgets.QMainWindow, Ui_MainWindow):
         self.label.setText(f"Conectado a {nom_Dispositivo} - {firmware}")
         
         #label2
-        img =QPixmap("./despacho.jpg")
-        self.label_2.setPimax()
+        #img =QPixmap("./despacho.jpg")
+        #self.label_2.setPimax()
         
 
 def run():
