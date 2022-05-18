@@ -1,8 +1,8 @@
 from time import sleep
 import ftrobopy
 
-plc = ftrobopy.ftrobopy("192.168.1.240") # ip de mi hogar
-#plc = ftrobopy.ftrobopy("192.168.0.101") # ip de la U
+#plc = ftrobopy.ftrobopy("192.168.1.240") # ip de mi hogar
+plc = ftrobopy.ftrobopy("192.168.0.101") # ip de la U
 
 # Inicialización de variables y objetos
 
@@ -23,7 +23,7 @@ MA1_Reverso = plc.output(2)
 #Despacho
 MA5 = plc.output(3)
 MA3 = plc.output(4) #Cambiar a 4 y 6 para probar original1
-MA2 = plc.output(7)
+MA2 = plc.output(6)
 
 #### BOTÓN 
 BG1 = plc.input(1)
@@ -34,7 +34,7 @@ def reset():
     '''
         Función que permite enviar el eje lineal de nuevo a su posición original
     '''
-    while BG1.state() != 1:
+    while BG1.state() != 0:
         MA1.setLevel(0)
         print("Eje en el origen")
         break
@@ -120,7 +120,6 @@ def eje_lineal(num_Rampa,sensor, pulsos):
                 MA2.setLevel(0)
                 print(f"Rampa #{num_Rampa} lista")
                 cambio_while =False
-                # break
                 
     sleep(3)
     reset()
@@ -201,7 +200,7 @@ def rampas():
         elif estado_B5 != 1:
             rampa = 2
             print("¡El producto se dirige a la rampa #2!")
-            despacho(rampa,B5,207)
+            despacho(rampa,B5,209)
         elif estado_B6 != 1:
             rampa = 3
             print("¡El producto se dirige a la rampa #3!")
@@ -209,7 +208,7 @@ def rampas():
         elif estado_B7 != 1:
             rampa = 4
             print("¡El producto se dirige a la rampa #4!")
-            despacho(rampa,B7, 653)
+            despacho(rampa,B7, 651)
         else:
             print("¡Todas las rampas están llenas!")
 
