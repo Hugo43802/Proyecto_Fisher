@@ -2,7 +2,11 @@ from time import sleep
 import ftrobopy
 
 #plc = ftrobopy.ftrobopy("192.168.1.240") # ip de mi hogar
+<<<<<<< HEAD
 plc = ftrobopy.ftrobopy("192.168.0.101") # ip de la U
+=======
+plc = ftrobopy.ftrobopy("192.168.0.100") # ip de la U
+>>>>>>> 77b4dd0a4110d188b6389f71c972a91edf9c8cb4
 
 # Inicialización de variables y objetos
 
@@ -157,7 +161,8 @@ def despacho(num_Rampa,sensor,pulsos):
             MA5.setLevel(0)
 
             vinipelado()
-            sleep(0.5)
+            
+            #sleep(0.5)
 
             MA3.setLevel(500)
             MA2.setLevel(512)
@@ -200,7 +205,11 @@ def rampas():
         elif estado_B5 != 1:
             rampa = 2
             print("¡El producto se dirige a la rampa #2!")
+<<<<<<< HEAD
             despacho(rampa,B5,209)
+=======
+            despacho(rampa,B5,208)
+>>>>>>> 77b4dd0a4110d188b6389f71c972a91edf9c8cb4
         elif estado_B6 != 1:
             rampa = 3
             print("¡El producto se dirige a la rampa #3!")
