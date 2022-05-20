@@ -1,8 +1,28 @@
+from ast import Return
 from time import sleep
 import ftrobopy
+import random
 
-#plc = ftrobopy.ftrobopy("192.168.1.240") # ip de mi hogar
+'''
+    VARIABLES
+'''  
+# Crear diccionario de colores
+
+colores = {
+    "Azul": 4,
+    "Rojo": 7,
+    "Blanco": 10,
+}
+
+# Se crean los arreglos vacíos para guardar tiempos y claves
+salida_Tiempos = []
+salida_Claves = []
+
+'''
+    INICIO DE PLC
+'''
 plc = ftrobopy.ftrobopy("192.168.0.100") # ip de la U
+
 
 # Inicialización de variables y objetos
 
@@ -28,6 +48,41 @@ MA2 = plc.output(6)
 #### BOTÓN 
 BG1 = plc.input(1)
 
+def aleatorio():
+    '''
+        Esta función elige entre diferentes combinaciones de colores
+        para dar las familias de producto que serán procesadas 
+        por la función vinipelado y eje_lineal.
+        
+        Esta función retorna la sumatoria de tiempos de los colores
+        y lo divide a la mitad.
+    '''
+    for elem in range(4):
+        ## Elección de valores al azar
+        alea = random.choice(list(colores.values()))
+
+        ## pos = Guarda los elementos mutables en lista (valores)
+        pos = list(colores.values())
+        ## llaves = Guarda las claves mutables en lista (claves)
+        llaves = list(colores.keys())
+
+        ## llave obtiene los valores y reconoce las claves
+        llave = pos.index(alea)
+
+        # Agregar a la lista salida tiempos, los valores
+        salida_Tiempos.append(alea)
+        # Agregar para visualizar los colores seleccionados.
+        salida_Claves.append(llaves[llave])
+
+        #Sunar los valores del arreglo tiempos
+        suma = sum(salida_Tiempos)
+
+        return suma
+    
+    print(salida_Tiempos)
+    print(salida_Claves)
+    print("La suma de los tiempos es: ", suma)
+
 ## Función Reset para verificar que el motor MA1 siempre esté en la posición de 
 # origen
 def reset():
@@ -43,14 +98,20 @@ def reset():
 
 def vinipelado():
     '''
-        Función que activa el motor MA4 del prodceso de despacho
+        Función que activa el motor MA4 del prodceso de despacho,
+        adicional se obtiene el tiempo de la combinación de colores
+        obtenida de la función aleatorio.
     '''
+    
+    tiempo = aleatorio()/3
     MA4 = plc.output(5) # Para probar en el sistema orginal cambiar a 5
+    sleep(tiempo)
     MA4.setLevel(512)
-    sleep(2)
+    sleep(tiempo)
+    print("El tiempo de vinipelado es: ",tiempo)
     MA4.setLevel(0)
 
-def eje_lineal(num_Rampa,sensor, pulsos):
+def eje_lineal(num_Rampa,sensor, pulsos, tiempo):
     '''
         num_Rampa = Número de la rampa hacia la que se dirigirá el motor MA1_Reverso
 
@@ -59,6 +120,8 @@ def eje_lineal(num_Rampa,sensor, pulsos):
         pulsos = Cantidad de pasos que debe ejercer el motor para llegar a la meta
         Esta función genera el movimiento del eje lineal para transportar según la 
         cantidad de pulsos el producto que se encuentra en la banda.
+        
+        tiempo = Suma de los tiempos obtenidos de la función aleatorio().
 
         La función eje_lineal genera el movimiento del motor MA1 y MA1_Reverso, para ubicar
         la banda en las diferentes rampas según los pulsos y se detiene al identificar el 
@@ -75,7 +138,8 @@ def eje_lineal(num_Rampa,sensor, pulsos):
     # C1 = Variable que guarda los datos del contador desde el PLC
 
     # Los estados B4, B5, B6 y B7, verifican si el producto pasa por el sensor
-
+    sleep(tiempo)
+    
     pos_inicial_eje = plc.getCurrentCounterValue(0)
     print("El valor de C2 es: ", pos_inicial_eje)
 
@@ -85,18 +149,7 @@ def eje_lineal(num_Rampa,sensor, pulsos):
 
     while cambio_while:
         MA1.setLevel(0)
-
-        # if pulsos == 0:
-        #     MA1_Reverso.setLevel(0)
-        #     sleep(1)
-        #     MA2.setLevel(512)
-
-        #     if estado_B4 == 1 and num_Rampa == 1:
-        #         print("Detectado B4")
-        #         MA2.setLevel(0)
-        #         break
-
-        # else:
+        
         C1 = plc.getCurrentCounterValue(0) 
         print(C1)
         
@@ -121,9 +174,9 @@ def eje_lineal(num_Rampa,sensor, pulsos):
                 print(f"Rampa #{num_Rampa} lista")
                 cambio_while =False
                 
-    sleep(3)
+    sleep(tiempo)
     reset()
-    sleep(3)
+    sleep(tiempo)
     rampas()
     plc.updateWait()
 
@@ -167,18 +220,9 @@ def despacho(num_Rampa,sensor,pulsos):
             MA3.setLevel(0)
             MA2.setLevel(0)
             
-            eje_lineal(num_Rampa, sensor, pulsos) #Envia los datos directamente a la función eje lineal con el número del sensor
-            #Entrar al movimiento de la banda lineal
-            # if num_Rampa == 1:
-            #     eje_lineal(num_Rampa, B4, pulsos)
-            # elif num_Rampa == 2:
-            #     eje_lineal(num_Rampa,B5,pulsos)
-            # elif num_Rampa == 3:
-            #     eje_lineal(num_Rampa,B6, pulsos)
-            # elif num_Rampa == 4:
-            #     eje_lineal(num_Rampa,B7,pulsos)
-
-
+            tiempo = aleatorio()/2
+            eje_lineal(num_Rampa, sensor, pulsos, tiempo) #Envia los datos directamente a la función eje lineal con el número del sensor
+           
     cambio_while = False
     plc.updateWait()
 
@@ -192,7 +236,6 @@ def rampas():
         estado_B5 = B5.state()
         estado_B6 = B6.state()
         estado_B7 = B7.state()
-        # 
 
         if estado_B4 != 1:
             rampa = 1
@@ -201,9 +244,7 @@ def rampas():
         elif estado_B5 != 1:
             rampa = 2
             print("¡El producto se dirige a la rampa #2!")
-            #despacho(rampa,B5,205)
             despacho(rampa,B5,209)
-            #despacho(rampa,B5,208)
         elif estado_B6 != 1:
             rampa = 3
             print("¡El producto se dirige a la rampa #3!")
@@ -215,7 +256,8 @@ def rampas():
         else:
             print("¡Todas las rampas están llenas!")
 
-        plc.updateWait()   
+        plc.updateWait()
 
 if __name__ == "__main__":
     rampas()
+    
