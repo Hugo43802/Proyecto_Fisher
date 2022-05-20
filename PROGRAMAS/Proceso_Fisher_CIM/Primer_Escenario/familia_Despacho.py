@@ -176,7 +176,7 @@ def eje_lineal(num_Rampa,sensor, pulsos, tiempo):
                 
     sleep(tiempo)
     reset()
-    sleep(tiempo)
+    sleep(4)
     rampas()
     plc.updateWait()
 
