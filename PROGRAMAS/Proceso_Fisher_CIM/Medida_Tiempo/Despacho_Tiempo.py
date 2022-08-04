@@ -1,7 +1,9 @@
-from ast import Return
 from time import sleep
+import time
 import ftrobopy
 import random
+
+
 
 '''
     VARIABLES
@@ -86,6 +88,10 @@ def aleatorio():
 ## Función Reset para verificar que el motor MA1 siempre esté en la posición de 
 # origen
 def reset():
+    tinicio = 0
+    tfinal = 0
+    
+    tinicio = time.time()
     '''
         Función que permite enviar el eje lineal de nuevo a su posición original
     '''
@@ -95,8 +101,15 @@ def reset():
         break
     else:
         MA1.setLevel(512)
-
+    
+    tfinal = time.time()
+    t = tfinal - tinicio
+    print(t)    
+    
+    
+    
 def vinipelado():
+    tinicio = time.time()
     '''
         Función que activa el motor MA4 del prodceso de despacho,
         adicional se obtiene el tiempo de la combinación de colores
@@ -110,6 +123,10 @@ def vinipelado():
     sleep(tiempo)
     print("El tiempo de vinipelado es: ",tiempo)
     MA4.setLevel(0)
+    
+    tfinal = time.time()
+    t = tfinal - tinicio
+    print(t)
 
 def eje_lineal(num_Rampa,sensor, pulsos, tiempo):
     '''
@@ -141,7 +158,7 @@ def eje_lineal(num_Rampa,sensor, pulsos, tiempo):
     sleep(tiempo)
     
     pos_inicial_eje = plc.getCurrentCounterValue(0)
-    print("El valor de C2 es: ", pos_inicial_eje)
+    #print("El valor de C2 es: ", pos_inicial_eje)
 
     meta = pos_inicial_eje + pulsos
 
@@ -153,20 +170,18 @@ def eje_lineal(num_Rampa,sensor, pulsos, tiempo):
         C1 = plc.getCurrentCounterValue(0) 
         print(C1)
         
-        print("La meta es: ", meta)
-        print("Los pulsos contados son: ",pulsos)
+        #print("La meta es: ", meta)
+        #print("Los pulsos contados son: ",pulsos)
         
         MA1_Reverso.setLevel(512)
         
         while (plc.getCurrentCounterValue(0) >= meta) and (cambio_while == True): #Para no usar break, simplemente se mantiene el cambio a True
             estado = sensor.state() # el estado será el cambio del objeto dependiendo de la rampa
             MA1_Reverso.setLevel(0)
-            print("Los pulsos contados son: ",pulsos)
+            #print("Los pulsos contados son: ",pulsos)
             print("Eje en posición")
-            # sleep(2)
             
             MA2.setLevel(512)
-            # sleep(2)
             print("La rampa es: ", num_Rampa)
             
             if estado == 1: 
@@ -211,8 +226,6 @@ def despacho(num_Rampa,sensor,pulsos):
 
             vinipelado()
             
-            #sleep(0.5)
-
             MA3.setLevel(500)
             MA2.setLevel(512)
         
@@ -257,7 +270,7 @@ def rampas():
             print("¡Todas las rampas están llenas!")
 
         plc.updateWait()
-
+        
 if __name__ == "__main__":
     rampas()
-    
+     
