@@ -1,9 +1,6 @@
-from time import sleep
-import time
+import time 
 import ftrobopy
 import random
-
-
 
 '''
     VARIABLES
@@ -88,10 +85,7 @@ def aleatorio():
 ## Función Reset para verificar que el motor MA1 siempre esté en la posición de 
 # origen
 def reset():
-    tinicio = 0
-    tfinal = 0
-    
-    tinicio = time.time()
+    start_time = time.time()
     '''
         Función que permite enviar el eje lineal de nuevo a su posición original
     '''
@@ -101,15 +95,14 @@ def reset():
         break
     else:
         MA1.setLevel(512)
-    
-    tfinal = time.time()
-    t = tfinal - tinicio
-    print(t)    
-    
+
+    tf= time.time()
+    #print("Tiempo de eje", tf-start_time) 
+   
     
     
 def vinipelado():
-    tinicio = time.time()
+    start_time = time.time()
     '''
         Función que activa el motor MA4 del prodceso de despacho,
         adicional se obtiene el tiempo de la combinación de colores
@@ -118,17 +111,17 @@ def vinipelado():
     
     tiempo = aleatorio()/3
     MA4 = plc.output(5) # Para probar en el sistema orginal cambiar a 5
-    sleep(tiempo)
+    time.sleep(tiempo)
     MA4.setLevel(512)
-    sleep(tiempo)
-    print("El tiempo de vinipelado es: ",tiempo)
+    time.sleep(tiempo)
+    #print("El tiempo de vinipelado es: ",tiempo)
     MA4.setLevel(0)
     
-    tfinal = time.time()
-    t = tfinal - tinicio
-    print(t)
+    tf= time.time()
+    print("Tiempo de vinipelado", tf-start_time) 
 
 def eje_lineal(num_Rampa,sensor, pulsos, tiempo):
+    start_time = time.time()
     '''
         num_Rampa = Número de la rampa hacia la que se dirigirá el motor MA1_Reverso
 
@@ -155,7 +148,7 @@ def eje_lineal(num_Rampa,sensor, pulsos, tiempo):
     # C1 = Variable que guarda los datos del contador desde el PLC
 
     # Los estados B4, B5, B6 y B7, verifican si el producto pasa por el sensor
-    sleep(tiempo)
+    time.sleep(tiempo)
     
     pos_inicial_eje = plc.getCurrentCounterValue(0)
     #print("El valor de C2 es: ", pos_inicial_eje)
@@ -168,7 +161,7 @@ def eje_lineal(num_Rampa,sensor, pulsos, tiempo):
         MA1.setLevel(0)
         
         C1 = plc.getCurrentCounterValue(0) 
-        print(C1)
+        #print(C1)
         
         #print("La meta es: ", meta)
         #print("Los pulsos contados son: ",pulsos)
@@ -179,23 +172,31 @@ def eje_lineal(num_Rampa,sensor, pulsos, tiempo):
             estado = sensor.state() # el estado será el cambio del objeto dependiendo de la rampa
             MA1_Reverso.setLevel(0)
             #print("Los pulsos contados son: ",pulsos)
-            print("Eje en posición")
+            #print("Eje en posición")
+            # sleep(2)
             
             MA2.setLevel(512)
-            print("La rampa es: ", num_Rampa)
+            # sleep(2)
+            #print("La rampa es: ", num_Rampa)
             
             if estado == 1: 
                 MA2.setLevel(0)
                 print(f"Rampa #{num_Rampa} lista")
                 cambio_while =False
                 
-    sleep(tiempo)
+    time.sleep(tiempo)
     reset()
-    sleep(4)
+    time.sleep(4)
+    
+    tf= time.time()
+    print("Tiempo de eje_lineal", tf-start_time)
+    
     rampas()
+        
     plc.updateWait()
 
 def despacho(num_Rampa,sensor,pulsos):
+    start_time = time.time()
     '''
         num_Rampa: Número de la rampa a la que el producto se dirigirá
 
@@ -226,6 +227,8 @@ def despacho(num_Rampa,sensor,pulsos):
 
             vinipelado()
             
+            #sleep(0.5)
+
             MA3.setLevel(500)
             MA2.setLevel(512)
         
@@ -234,12 +237,17 @@ def despacho(num_Rampa,sensor,pulsos):
             MA2.setLevel(0)
             
             tiempo = aleatorio()/2
+            tf= time.time()
+            print("Tiempo de despacho: ", tf-start_time) 
             eje_lineal(num_Rampa, sensor, pulsos, tiempo) #Envia los datos directamente a la función eje lineal con el número del sensor
-           
+    
     cambio_while = False
+    
     plc.updateWait()
 
 def rampas():
+    start_time = time.time()
+    
     cambio_while = True
     while cambio_while:
 
@@ -269,8 +277,10 @@ def rampas():
         else:
             print("¡Todas las rampas están llenas!")
 
-        plc.updateWait()
+        tf= time.time()
         
+        plc.updateWait()
+    print("Tiempo de rampas: ", tf-start_time) 
+    
 if __name__ == "__main__":
     rampas()
-     
