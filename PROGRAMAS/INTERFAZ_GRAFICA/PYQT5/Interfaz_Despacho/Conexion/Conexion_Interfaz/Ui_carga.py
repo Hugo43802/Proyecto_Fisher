@@ -14,18 +14,20 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Carga(object):
     def setupUi(self, Carga):
         Carga.setObjectName("Carga")
-        Carga.resize(632, 154)
+        Carga.resize(632, 200)
         self.centralwidget = QtWidgets.QWidget(Carga)
         self.centralwidget.setObjectName("centralwidget")
-        self.Abrir = QtWidgets.QPushButton(self.centralwidget)
-        self.Abrir.setGeometry(QtCore.QRect(450, 30, 93, 28))
-        self.Abrir.setObjectName("Abrir")
-        self.plainTextEdit = QtWidgets.QPlainTextEdit(self.centralwidget)
-        self.plainTextEdit.setGeometry(QtCore.QRect(40, 30, 381, 31))
+        self.groupBox = QtWidgets.QGroupBox(self.centralwidget)
+        self.groupBox.setGeometry(QtCore.QRect(60, 20, 481, 131))
+        self.groupBox.setObjectName("groupBox")
+        self.plainTextEdit = QtWidgets.QPlainTextEdit(self.groupBox)
+        self.plainTextEdit.setGeometry(QtCore.QRect(50, 40, 381, 31))
+        self.plainTextEdit.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.plainTextEdit.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.plainTextEdit.setObjectName("plainTextEdit")
-        self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(270, 70, 121, 31))
-        self.label.setObjectName("label")
+        self.Abrir = QtWidgets.QPushButton(self.groupBox)
+        self.Abrir.setGeometry(QtCore.QRect(180, 80, 93, 28))
+        self.Abrir.setObjectName("Abrir")
         Carga.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(Carga)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 632, 26))
@@ -40,9 +42,10 @@ class Ui_Carga(object):
 
     def retranslateUi(self, Carga):
         _translate = QtCore.QCoreApplication.translate
-        Carga.setWindowTitle(_translate("Carga", "MainWindow"))
+        Carga.setWindowTitle(_translate("Carga", "Carga IP"))
+        self.groupBox.setTitle(_translate("Carga", "Escribir la dirección IP del PLC"))
+        self.plainTextEdit.setPlaceholderText(_translate("Carga", "Por favor escribir la dirección IP del PLC"))
         self.Abrir.setText(_translate("Carga", "Abrir Ventana"))
-        self.label.setText(_translate("Carga", "TextLabel"))
 
 
 if __name__ == "__main__":
