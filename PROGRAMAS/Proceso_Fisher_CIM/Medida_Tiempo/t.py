@@ -20,7 +20,7 @@ salida_Claves = []
 '''
     INICIO DE PLC
 '''
-plc = ftrobopy.ftrobopy("192.168.0.115") # ip de la U
+plc = ftrobopy.ftrobopy("192.168.0.102") # ip de la U
 
 
 # Inicialización de variables y objetos
@@ -98,9 +98,7 @@ def reset():
 
     tf= time.time()
     #print("Tiempo de eje", tf-start_time) 
-   
-    
-    
+       
 def vinipelado():
     start_time = time.time()
     '''
@@ -265,15 +263,15 @@ def rampas():
         elif estado_B5 != 1:
             rampa = 2
             print("¡El producto se dirige a la rampa #2!")
-            despacho(rampa,B5,209)
+            despacho(rampa,B5,190)
         elif estado_B6 != 1:
             rampa = 3
             print("¡El producto se dirige a la rampa #3!")
-            despacho(rampa,B6 ,435)
+            despacho(rampa,B6 ,400)
         elif estado_B7 != 1:
             rampa = 4
             print("¡El producto se dirige a la rampa #4!")
-            despacho(rampa,B7, 651)
+            despacho(rampa,B7, 627)
         else:
             print("¡Todas las rampas están llenas!")
 

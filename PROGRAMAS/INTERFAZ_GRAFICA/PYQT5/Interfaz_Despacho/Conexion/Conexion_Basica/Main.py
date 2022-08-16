@@ -12,16 +12,14 @@ class DespachoUi(QtWidgets.QMainWindow, Ui_MainWindow):
         
         self.label.setText("¡No Conectado!")
         
-        plc = ftrobopy.ftrobopy("192.168.0.100")
+        plc = ftrobopy.ftrobopy("192.168.0.102")
         nom_Dispositivo = plc.getDevicename() #guarda en variable el nombre del dispositivo o no sirve
         firmware = plc.getFirmwareVersion()
         
         #label
         self.label.setText(f"Conectado a {nom_Dispositivo} - {firmware}")
         
-        #label2
-        #img =QPixmap("./despacho.jpg")
-        #self.label_2.setPimax()
+        
         
 
 def run():
