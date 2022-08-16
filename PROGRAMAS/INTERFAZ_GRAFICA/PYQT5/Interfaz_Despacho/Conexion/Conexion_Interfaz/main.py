@@ -27,9 +27,6 @@ class CargaUi(QtWidgets.QMainWindow, Ui_Carga):
         #Se asignaa la segunda ventana lo escrito en el editText
         self.segunda.Recibe.setPlainText(texto)
         
-        
-        
-
 def run():
     app = QtWidgets.QApplication([])
     window = CargaUi()
