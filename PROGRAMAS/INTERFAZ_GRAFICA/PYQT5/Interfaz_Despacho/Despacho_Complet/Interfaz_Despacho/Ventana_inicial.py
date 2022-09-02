@@ -15,7 +15,8 @@ class VentanaUi(QtWidgets.QMainWindow, Ui_Inicio):
         
     def Aceptar_clic(self):
             if self.Automatico.isChecked():
-                    self.label.setText("Lo logré")
+                self.segunda = Despacho.DespachoUi()
+                self.segunda.show()
   
 def run():
         app = QtWidgets.QApplication([])
