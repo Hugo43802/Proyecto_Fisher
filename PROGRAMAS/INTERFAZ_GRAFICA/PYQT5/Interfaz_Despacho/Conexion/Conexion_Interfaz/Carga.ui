@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>632</width>
-    <height>200</height>
+    <height>413</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,47 +17,51 @@
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>20</y>
-      <width>481</width>
-      <height>131</height>
+      <x>0</x>
+      <y>10</y>
+      <width>621</width>
+      <height>71</height>
      </rect>
     </property>
     <property name="title">
-     <string>Escribir la dirección IP del PLC</string>
+     <string>Estado de la Conexión</string>
     </property>
-    <widget class="QPlainTextEdit" name="plainTextEdit">
+    <widget class="QLabel" name="label">
      <property name="geometry">
       <rect>
-       <x>50</x>
-       <y>40</y>
-       <width>381</width>
+       <x>100</x>
+       <y>20</y>
+       <width>371</width>
        <height>31</height>
       </rect>
      </property>
-     <property name="verticalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOff</enum>
-     </property>
-     <property name="horizontalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOff</enum>
-     </property>
-     <property name="placeholderText">
-      <string>Por favor escribir la dirección IP del PLC</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="Abrir">
-     <property name="geometry">
-      <rect>
-       <x>180</x>
-       <y>80</y>
-       <width>93</width>
-       <height>28</height>
-      </rect>
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
      </property>
      <property name="text">
-      <string>Abrir Ventana</string>
+      <string>TextLabel</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
+   </widget>
+   <widget class="QPushButton" name="Abrir">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>140</y>
+      <width>93</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Abrir Ventana</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

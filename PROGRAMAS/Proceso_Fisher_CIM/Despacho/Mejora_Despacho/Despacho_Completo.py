@@ -2,7 +2,7 @@ from time import sleep
 import ftrobopy
 
 #plc = ftrobopy.ftrobopy("192.168.1.240") # ip de mi hogar
-plc = ftrobopy.ftrobopy("192.168.0.100") # ip de la U
+plc = ftrobopy.ftrobopy("192.168.0.117") # ip de la U
 
 # Inicialización de variables y objetos
 
@@ -202,16 +202,16 @@ def rampas():
             rampa = 2
             print("¡El producto se dirige a la rampa #2!")
             #despacho(rampa,B5,205)
-            despacho(rampa,B5,209)
+            despacho(rampa,B5,200)
             #despacho(rampa,B5,208)
         elif estado_B6 != 1:
             rampa = 3
             print("¡El producto se dirige a la rampa #3!")
-            despacho(rampa,B6 ,435)
+            despacho(rampa,B6 ,420)
         elif estado_B7 != 1:
             rampa = 4
             print("¡El producto se dirige a la rampa #4!")
-            despacho(rampa,B7, 651)
+            despacho(rampa,B7, 640)
         else:
             print("¡Todas las rampas están llenas!")
 

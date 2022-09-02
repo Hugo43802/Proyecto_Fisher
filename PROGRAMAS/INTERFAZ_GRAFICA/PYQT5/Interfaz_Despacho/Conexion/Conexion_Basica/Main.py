@@ -18,9 +18,6 @@ class DespachoUi(QtWidgets.QMainWindow, Ui_MainWindow):
         
         #label
         self.label.setText(f"Conectado a {nom_Dispositivo} - {firmware}")
-        
-        
-        
 
 def run():
     app = QtWidgets.QApplication([])

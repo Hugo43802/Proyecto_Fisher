@@ -20,7 +20,7 @@ salida_Claves = []
 '''
     INICIO DE PLC
 '''
-plc = ftrobopy.ftrobopy("192.168.0.102") # ip de la U
+plc = ftrobopy.ftrobopy("192.168.0.117") # ip de la U
 
 
 # Inicialización de variables y objetos

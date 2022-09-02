@@ -14,19 +14,23 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Carga(object):
     def setupUi(self, Carga):
         Carga.setObjectName("Carga")
-        Carga.resize(632, 200)
+        Carga.resize(632, 413)
         self.centralwidget = QtWidgets.QWidget(Carga)
         self.centralwidget.setObjectName("centralwidget")
         self.groupBox = QtWidgets.QGroupBox(self.centralwidget)
-        self.groupBox.setGeometry(QtCore.QRect(60, 20, 481, 131))
+        self.groupBox.setGeometry(QtCore.QRect(0, 10, 621, 131))
         self.groupBox.setObjectName("groupBox")
-        self.plainTextEdit = QtWidgets.QPlainTextEdit(self.groupBox)
-        self.plainTextEdit.setGeometry(QtCore.QRect(50, 40, 381, 31))
-        self.plainTextEdit.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.plainTextEdit.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.plainTextEdit.setObjectName("plainTextEdit")
-        self.Abrir = QtWidgets.QPushButton(self.groupBox)
-        self.Abrir.setGeometry(QtCore.QRect(180, 80, 93, 28))
+        self.label = QtWidgets.QLabel(self.groupBox)
+        self.label.setGeometry(QtCore.QRect(100, 20, 371, 31))
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label.setFont(font)
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
+        self.label.setObjectName("label")
+        self.Abrir = QtWidgets.QPushButton(self.centralwidget)
+        self.Abrir.setGeometry(QtCore.QRect(10, 140, 93, 28))
         self.Abrir.setObjectName("Abrir")
         Carga.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(Carga)
@@ -43,16 +47,6 @@ class Ui_Carga(object):
     def retranslateUi(self, Carga):
         _translate = QtCore.QCoreApplication.translate
         Carga.setWindowTitle(_translate("Carga", "Carga IP"))
-        self.groupBox.setTitle(_translate("Carga", "Escribir la dirección IP del PLC"))
-        self.plainTextEdit.setPlaceholderText(_translate("Carga", "Por favor escribir la dirección IP del PLC"))
+        self.groupBox.setTitle(_translate("Carga", "Estado de la Conexión"))
+        self.label.setText(_translate("Carga", "TextLabel"))
         self.Abrir.setText(_translate("Carga", "Abrir Ventana"))
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Carga = QtWidgets.QMainWindow()
-    ui = Ui_Carga()
-    ui.setupUi(Carga)
-    Carga.show()
-    sys.exit(app.exec_())
