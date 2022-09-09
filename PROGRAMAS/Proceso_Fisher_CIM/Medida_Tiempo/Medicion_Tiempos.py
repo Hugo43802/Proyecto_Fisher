@@ -96,9 +96,10 @@ def reset():
     else:
         MA1.setLevel(512)
 
-    tf= time.time()
+    #tf= time.time()
     #print("Tiempo de eje", tf-start_time) 
-       
+
+
 def vinipelado():
     start_time = time.time()
     '''
