@@ -3,6 +3,7 @@ from Ui_despacho import *
 import ftrobopy
 import sys
 
+plc = ftrobopy.ftrobopy("192.168.0.117")
 
 class DespachoUi(QtWidgets.QMainWindow, Ui_MainWindow):
 
