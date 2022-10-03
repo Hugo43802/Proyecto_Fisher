@@ -6,6 +6,7 @@ class App:
         self.ventana = Tk()
         self.ventana.geometry("260x150")
         self.ventana.resizable(0,0)
+        self.ventana.eval('tk::PlaceWindow . center')
         self.ventana.title("Ventana de Inicio")
 
         # configurar el grid
@@ -40,13 +41,13 @@ class App:
         self.btn_Inicio = Button(
             text="Inicio",
             width=10,
-            command= self.imprimir
+            command= self.cambio_Ventana
         )
         self.btn_Inicio.grid(row=3, column=0, columnspan= 3, pady=10)
 
         self.ventana.mainloop()
 
-    def imprimir(self):
+    def cambio_Ventana(self):
         if self.seleccion.get() == 0:
             ventana_automatico = automatico.Automatico(Toplevel(self.ventana))
         if self.seleccion.get() == 1:
