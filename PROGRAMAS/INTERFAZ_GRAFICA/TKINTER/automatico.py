@@ -16,7 +16,7 @@ class Automatico:
             text="Combinación de Productos",
             font= ('Helvetica', 10, 'bold')
         ).grid(row=0, column=0, columnspan= 2)
-
+        
         self.msj_Fichas = Text(
             ventana_auto,
             width=30,
