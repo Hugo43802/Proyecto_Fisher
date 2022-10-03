@@ -49,7 +49,7 @@ class App:
 
     def cambio_Ventana(self):
         if self.seleccion.get() == 0:
-            ventana_automatico = automatico.Automatico(Toplevel(self.ventana))
+            automatico.Automatico(Toplevel(self.ventana))
         if self.seleccion.get() == 1:
             print("self.Ventana 2")
 

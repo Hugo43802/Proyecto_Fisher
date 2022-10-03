@@ -1,8 +1,3 @@
-from cProfile import label
-from cgitb import text
-from distutils.command.config import config
-from sre_parse import State
-from textwrap import fill
 from tkinter import *
 
 class Automatico:
@@ -42,7 +37,7 @@ class Automatico:
             state="disabled"
         ).grid(row=2, column=0, sticky=E)
 
-        # PROCESO
+# PROCESO
 
         self.msj_Proceso = Label(
             ventana_auto,
