@@ -28,14 +28,14 @@ class Automatico:
             ventana_auto,
             text="Sumatoria de Tiempos:",
             width=20
-        ).grid(row=2, column=0, pady=10)
+        ).grid(row=2, column=0, pady=10, sticky=W)
 
         self.msj_Sumatxt = Text(
             ventana_auto,
             width=8,
             height=1,
             state="disabled"
-        ).grid(row=2, column=0, sticky=E)
+        ).grid(row=2, column=0, columnspan=2)
 
 # PROCESO
 
