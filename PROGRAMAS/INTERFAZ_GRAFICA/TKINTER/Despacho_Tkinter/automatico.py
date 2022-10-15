@@ -9,7 +9,7 @@ class Automatico:
 
         # configurar el grid
         ventana_auto.columnconfigure(0, weight=1)
-        ventana_auto.columnconfigure(1, weight=1)
+        ventana_auto.columnconfigure(1, weight=2)
 
         self.msj_opciones = Label(
             ventana_auto,
@@ -28,14 +28,14 @@ class Automatico:
             ventana_auto,
             text="Sumatoria de Tiempos:",
             width=20
-        ).grid(row=2, column=0, pady=10, sticky=W)
+        ).grid(row=2, column=0, pady=10)
 
         self.msj_Sumatxt = Text(
             ventana_auto,
             width=8,
             height=1,
             state="disabled"
-        ).grid(row=2, column=0, columnspan=2)
+        ).grid(row=2, column=1, sticky=W)
 
 # PROCESO
 
