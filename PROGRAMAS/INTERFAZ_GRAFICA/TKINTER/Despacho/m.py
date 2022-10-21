@@ -1,5 +1,5 @@
 from tkinter import *
-from Despacho import *
+import Despacho as d
 
 class Automatico:
     def __init__(self):
@@ -141,9 +141,9 @@ class Automatico:
         
         #Botón de inicio
         def btn_Inicio():
-            aleatorio(fichas, sum_Fichas)
+            d.aleatorio(fichas, sum_Fichas)
             
-            #rampas(fichas, sum_Fichas)   
+            d.rampas(fichas, sum_Fichas)   
             
         self.Inicio = Button(
             text= "Inicio",
@@ -154,7 +154,7 @@ class Automatico:
         ).grid(row=13, column=0, columnspan=5, pady=5)
         
         
-               
+
         self.ventana_auto.mainloop()
         # No permite que se hagan acciones en otras ventanas 
                 

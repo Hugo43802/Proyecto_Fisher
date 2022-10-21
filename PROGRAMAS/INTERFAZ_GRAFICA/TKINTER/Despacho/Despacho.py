@@ -26,6 +26,7 @@ salida_Claves = []
 plc = ftrobopy.ftrobopy("192.168.0.117") # ip de la U
 
 
+
 # Inicialización de variables y objetos
 
 ## SENSORES REED
@@ -90,7 +91,7 @@ def aleatorio(msj_Fichas, msj_Sumatxt):
         msj_Fichas.set(salida_Claves)
         msj_Sumatxt.set(suma)        
     return suma
-  
+
 
 ## Función Reset para verificar que el motor MA1 siempre esté en la posición de 
 # origen
@@ -110,7 +111,7 @@ def reset():
     #print("Tiempo de eje", tf-start_time) 
 
 
-def vinipelado(msj_Fichas, msj_Sumatxt):
+def vinipelado(rdm):
     start_time = time.time()
     '''
         Función que activa el motor MA4 del prodceso de despacho,
@@ -118,7 +119,7 @@ def vinipelado(msj_Fichas, msj_Sumatxt):
         obtenida de la función aleatorio.
     '''
     
-    tiempo = aleatorio(msj_Fichas, msj_Sumatxt)/3
+    tiempo = rdm/3
     MA4 = plc.output(5) # Para probar en el sistema orginal cambiar a 5
     time.sleep(tiempo)
     MA4.setLevel(512)
@@ -204,7 +205,7 @@ def eje_lineal(num_Rampa,sensor, pulsos, tiempo):
         
     plc.updateWait()
 
-def despacho(num_Rampa,sensor,pulsos,msj_Fichas, msj_Sumatxt):
+def despacho(num_Rampa,sensor,pulsos,rdm):
     start_time = time.time()
     '''
         num_Rampa: Número de la rampa a la que el producto se dirigirá
@@ -234,7 +235,7 @@ def despacho(num_Rampa,sensor,pulsos,msj_Fichas, msj_Sumatxt):
             MA3.setLevel(0)
             MA5.setLevel(0)
 
-            vinipelado(msj_Fichas, msj_Sumatxt)
+            vinipelado(rdm)
             
             #sleep(0.5)
 
@@ -245,7 +246,7 @@ def despacho(num_Rampa,sensor,pulsos,msj_Fichas, msj_Sumatxt):
             MA3.setLevel(0)
             MA2.setLevel(0)
             
-            tiempo = aleatorio(msj_Fichas, msj_Sumatxt)/2
+            tiempo = rdm/2
             tf= time.time()
             print("Tiempo de despacho: ", tf-start_time) 
             eje_lineal(num_Rampa, sensor, pulsos, tiempo) #Envia los datos directamente a la función eje lineal con el número del sensor
@@ -256,7 +257,7 @@ def despacho(num_Rampa,sensor,pulsos,msj_Fichas, msj_Sumatxt):
 
 def rampas(msj_Fichas, msj_Sumatxt):
     start_time = time.time()
-    
+    rdm=aleatorio(msj_Fichas, msj_Sumatxt)
     cambio_while = True
     while cambio_while:
 
@@ -270,19 +271,19 @@ def rampas(msj_Fichas, msj_Sumatxt):
         if estado_B4 != 1:
             rampa = 1
             print("¡El producto se dirige a la rampa #1!")
-            despacho(rampa,B4,0,msj_Fichas, msj_Sumatxt)
+            despacho(rampa,B4,0,rdm)
         elif estado_B5 != 1:
             rampa = 2
             print("¡El producto se dirige a la rampa #2!")
-            despacho(rampa,B5,190,msj_Fichas, msj_Sumatxt)
+            despacho(rampa,B5,190,rdm)
         elif estado_B6 != 1:
             rampa = 3
             print("¡El producto se dirige a la rampa #3!")
-            despacho(rampa,B6 ,415,msj_Fichas, msj_Sumatxt)
+            despacho(rampa,B6 ,415,rdm)
         elif estado_B7 != 1:
             rampa = 4
             print("¡El producto se dirige a la rampa #4!")
-            despacho(rampa,B7, 627,msj_Fichas, msj_Sumatxt)
+            despacho(rampa,B7, 627,rdm)
         else:
             print("¡Todas las rampas están llenas!")
 

@@ -1,5 +1,4 @@
 import random
-from automatico import *
 from tkinter import *
 
 # Crear el diccionario con los colores
