@@ -1,6 +1,8 @@
 import time 
 import ftrobopy
 import random
+from automatico import *
+
 
 '''
     VARIABLES
@@ -47,7 +49,7 @@ MA2 = plc.output(6)
 #### BOTÓN 
 BG1 = plc.input(1)
 
-def aleatorio():
+def aleatorio(msj_Fichas):
     '''
         Esta función elige entre diferentes combinaciones de colores
         para dar las familias de producto que serán procesadas 
@@ -73,7 +75,7 @@ def aleatorio():
         # Agregar para visualizar los colores seleccionados.
         salida_Claves.append(llaves[llave])
 
-        #Sunar los valores del arreglo tiempos
+        #Sumar los valores del arreglo tiempos
         suma = sum(salida_Tiempos)
 
         return suma

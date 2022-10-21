@@ -4,7 +4,7 @@ import automatico
 class App:
     def __init__(self):
         self.ventana = Tk()
-        self.ventana.geometry("260x150")
+        self.ventana.geometry("260x260")
         self.ventana.resizable(0,0)
         self.ventana.eval('tk::PlaceWindow . center')
         self.ventana.title("Ventana de Inicio")
@@ -45,11 +45,21 @@ class App:
         )
         self.btn_Inicio.grid(row=3, column=0, columnspan= 3, pady=10)
 
+        self.msj_Ficha = Text(
+            width=30,
+            height=5,
+            state="disabled"
+        )
+        self.msj_Ficha.grid(row=4, column=0, columnspan=5)
+
+        self.msj_Ficha.insert(END, "Hola Mundo")
+
+        
         self.ventana.mainloop()
 
     def cambio_Ventana(self):
         if self.seleccion.get() == 0:
-            automatico.Automatico(Toplevel(self.ventana))
+            salida = automatico.Automatico(Toplevel(self.ventana))
         if self.seleccion.get() == 1:
             print("self.Ventana 2")
 
