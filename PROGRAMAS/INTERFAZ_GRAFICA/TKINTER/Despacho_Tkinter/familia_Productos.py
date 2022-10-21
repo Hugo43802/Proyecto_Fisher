@@ -13,7 +13,7 @@ colores = {
 salida_Tiempos = []
 salida_Claves = []
 
-def aleatorio(msj_Fichas):
+def aleatorio(tx):
     '''
         Esta función elige entre diferentes combinaciones de colores
         para dar las familias de producto que serán procesadas 
@@ -39,8 +39,8 @@ def aleatorio(msj_Fichas):
         #Sunar los valores del arreglo tiempos
         suma = sum(salida_Tiempos)
 
-        msj_Fichas.delete(0, END)
-        msj_Fichas.insert(END, "Hola Mundo")
+        tx.set(salida_Claves)
+        
 
     print(salida_Tiempos)
     print(salida_Claves)

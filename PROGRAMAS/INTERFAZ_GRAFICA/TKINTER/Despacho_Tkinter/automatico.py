@@ -23,13 +23,17 @@ class Automatico:
             font= ('Helvetica', 10, 'bold')
         ).grid(row=0, column=0, columnspan=5)
         
-        self.msj_Fichas = Text(
+        tx = StringVar()
+        self.msj_Fichas = Label(
             ventana_auto,
             width=30,
             height=5,
+            textvariable=tx,
             state="disabled"
         )
         self.msj_Fichas.grid(row=1, column=0, columnspan=5)
+        # tx.set("Hola Mundo")
+
 
         self.msj_Sumalbl = Label(
             ventana_auto,
@@ -128,14 +132,11 @@ class Automatico:
             state="disabled"
         ).grid(row=12, column=0, columnspan=5)
         
-        # aleatorio(self.msj_Fichas)
+        aleatorio(tx)
 
-        self.msj_Fichas.insert(END, "Hola Mundo")
+
         
         # No permite que se hagan acciones en otras ventanas 
         ventana_auto.grab_set()
 
-        ventana_auto.mainloop()
-
-        
 
