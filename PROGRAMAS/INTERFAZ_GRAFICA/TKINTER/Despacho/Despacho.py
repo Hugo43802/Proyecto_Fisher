@@ -17,8 +17,7 @@ colores = {
 }
 
 # Se crean los arreglos vacíos para guardar tiempos y claves
-salida_Tiempos = []
-salida_Claves = []
+
 
 '''
     INICIO DE PLC
@@ -60,7 +59,8 @@ def aleatorio(msj_Fichas, msj_Sumatxt):
         Esta función retorna la sumatoria de tiempos de los colores
         y lo divide a la mitad.
     '''
-    
+    salida_Tiempos = []
+    salida_Claves = []
     #msj_Fichas.set(salida_Claves)
     #msj_Sumatxt.set(suma)
     
