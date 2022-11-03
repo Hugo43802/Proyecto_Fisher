@@ -13,10 +13,6 @@ colores = {
     "Blanco": 10,
 }
 
-# Se crean los arreglos vacíos para guardar tiempos y claves
-salida_Tiempos = []
-salida_Claves = []
-
 '''
     INICIO DE PLC
 '''
@@ -48,6 +44,10 @@ MA2 = plc.output(6)
 BG1 = plc.input(1)
 
 def aleatorio():
+    # Se crean los arreglos vacíos para guardar tiempos y claves
+
+    salida_Tiempos = []
+    salida_Claves = []
     '''
         Esta función elige entre diferentes combinaciones de colores
         para dar las familias de producto que serán procesadas 
@@ -75,12 +75,14 @@ def aleatorio():
 
         #Sunar los valores del arreglo tiempos
         suma = sum(salida_Tiempos)
+        
+        print(salida_Tiempos)
+        print(salida_Claves)
+        print("La suma de los tiempos es: ", suma)
 
-        return suma
+    return suma
     
-    print(salida_Tiempos)
-    print(salida_Claves)
-    print("La suma de los tiempos es: ", suma)
+    
 
 ## Función Reset para verificar que el motor MA1 siempre esté en la posición de 
 # origen
@@ -100,7 +102,7 @@ def reset():
     #print("Tiempo de eje", tf-start_time) 
 
 
-def vinipelado():
+def vinipelado(rdm):
     start_time = time.time()
     '''
         Función que activa el motor MA4 del prodceso de despacho,
@@ -108,7 +110,7 @@ def vinipelado():
         obtenida de la función aleatorio.
     '''
     
-    tiempo = aleatorio()/3
+    tiempo = rdm/3
     MA4 = plc.output(5) # Para probar en el sistema orginal cambiar a 5
     time.sleep(tiempo)
     MA4.setLevel(512)
@@ -194,7 +196,7 @@ def eje_lineal(num_Rampa,sensor, pulsos, tiempo):
         
     plc.updateWait()
 
-def despacho(num_Rampa,sensor,pulsos):
+def despacho(num_Rampa,sensor,pulsos, rdm):
     start_time = time.time()
     '''
         num_Rampa: Número de la rampa a la que el producto se dirigirá
@@ -224,7 +226,7 @@ def despacho(num_Rampa,sensor,pulsos):
             MA3.setLevel(0)
             MA5.setLevel(0)
 
-            vinipelado()
+            vinipelado(rdm)
             
             #sleep(0.5)
 
@@ -235,7 +237,7 @@ def despacho(num_Rampa,sensor,pulsos):
             MA3.setLevel(0)
             MA2.setLevel(0)
             
-            tiempo = aleatorio()/2
+            tiempo = rdm/2
             tf= time.time()
             print("Tiempo de despacho: ", tf-start_time) 
             eje_lineal(num_Rampa, sensor, pulsos, tiempo) #Envia los datos directamente a la función eje lineal con el número del sensor
@@ -246,7 +248,7 @@ def despacho(num_Rampa,sensor,pulsos):
 
 def rampas():
     start_time = time.time()
-    
+    rdm=aleatorio()
     cambio_while = True
     while cambio_while:
 
@@ -260,19 +262,19 @@ def rampas():
         if estado_B4 != 1:
             rampa = 1
             print("¡El producto se dirige a la rampa #1!")
-            despacho(rampa,B4,0)
+            despacho(rampa,B4,0,rdm)
         elif estado_B5 != 1:
             rampa = 2
             print("¡El producto se dirige a la rampa #2!")
-            despacho(rampa,B5,190)
+            despacho(rampa,B5,190,rdm)
         elif estado_B6 != 1:
             rampa = 3
             print("¡El producto se dirige a la rampa #3!")
-            despacho(rampa,B6 ,415)
+            despacho(rampa,B6 ,415,rdm)
         elif estado_B7 != 1:
             rampa = 4
             print("¡El producto se dirige a la rampa #4!")
-            despacho(rampa,B7, 627)
+            despacho(rampa,B7, 627,rdm)
         else:
             print("¡Todas las rampas están llenas!")
 
