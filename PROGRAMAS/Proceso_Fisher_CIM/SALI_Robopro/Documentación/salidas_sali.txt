@@ -5,3 +5,15 @@ O4 = MA3 BANDA NEGRA LARGA
 O5 = ENVOLVEDORA
 O6 = MA4 BANDA NEGRA CORTA
 
+ENTRADAS 
+bg1 = I1 // botón
+B1 = I2 //reeds
+B2 = I3
+B3 = I4
+B4 = I5
+B5 = I6
+B6 = I7
+B7 = I8
+
+
+
